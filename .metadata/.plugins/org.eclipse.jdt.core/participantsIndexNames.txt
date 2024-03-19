@@ -1,0 +1,3 @@
+INDEX VERSION 1.134
+C:\dev_programs\sts_workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2503643558.index
+\hello-spring\src\main\java

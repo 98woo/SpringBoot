@@ -1,0 +1,67 @@
+package com.hello.forum.sample.web;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+/*
+ *	Servlet : HelloBootServlet.java
+ *		web.xml
+ *			<servlet>
+ *				<servlet-name>HelloBootServlet</servlet-name>
+ *				<servlet-class>com.hello.forum.sample.web.HelloBootServlet</servlet-class>
+ *			</servlet>
+ *			<servlet-mapping>
+ *				<servlet-name>HelloBootServlet</servlet-name>
+ *				<url-pattern>hello</url-pattern>
+ *			</servelt-mapping>
+ *
+ * 
+ * 	HelloBootServlet.java
+ * 		doGet(HttpServletRequest request, HttpServletResponse response) { ... }
+ * 		doPost(HttpServletRequest request, HttpServletResponse response) { ... }
+ * 
+ * 	Browser > http://localhost:8080/project-name/hello
+ * 
+ *  스프링의 Controller 애너테이션이 위 코드의 역할을 해준다.
+ */
+
+// Spring이 인스턴스로 만들어주는 대상.
+@Controller		// <-- Servelt의 역할을 수행함.
+public class HelloBootController {
+
+	public HelloBootController() {
+		// Spring이 호출한다!!! 
+		System.out.println("HelloBootController() 호출됨.");
+		System.out.println(this);
+	}
+	
+	@GetMapping("/hello")	// @GetMapping Servelet의 doGet(); 메서드를 수행
+							// "/hello" <-- servlet-mapping > url-pattern 값. url mapping을 해줘야 브라우저에서 찾아갈 수 있다. 
+	public ResponseEntity<String> hello() {
+		ResponseEntity<String> responseBody = new ResponseEntity<>("<h1>Hello Boot Controller</h1>", HttpStatus.OK);
+		return responseBody;
+	}
+	
+	@GetMapping("/hello")
+	public ResponseEntity<String> helloHtml() {
+		
+		StringBuffer html = new StringBuffer();
+		html.append(" <!DOCTYPE html> ");
+		html.append(" <html> ");
+		html.append(" 	<head> ");
+		html.append(" 		<title>Hello Spring</title> ");
+		html.append(" 	</head> ");
+		html.append(" 	<body> ");
+		html.append(" 		<div>Hello, Spring Controller</div> ");
+		html.append(" 	</body> ");
+		html.append(" </html> ");
+		
+		ResponseEntity<String> responseBody = new ResponseEntity<>(html.toString(), HttpStatus.OK);
+		return responseBody;
+	}
+	
+//	@PostMapping
+//	@DeleteMapping
+}

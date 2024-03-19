@@ -1,0 +1,21 @@
+package com.hello.forum.sample.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class IntroduceController {
+	
+	// http://localhost:8080/introduce
+	
+	@GetMapping("/introduce")
+	public String IntroduceController(Model model) {
+		
+		model.addAttribute("me", "김정우");
+		model.addAttribute("age", "28");
+		model.addAttribute("city", "춘천");
+		
+		return "introduce";
+	}
+}
