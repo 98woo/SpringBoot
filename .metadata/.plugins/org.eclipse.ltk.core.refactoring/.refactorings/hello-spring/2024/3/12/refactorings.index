@@ -1,3 +1,6 @@
 1710814844511	Rename resource 'application.properties'
 1710833422431	Rename type 'BbsVO'
 1710833800852	Rename type 'BbsDao'
+1710894585308	Rename type 'BbsService'
+1710895704048	Rename type 'BbsController'
+1710920093458	Copy folder

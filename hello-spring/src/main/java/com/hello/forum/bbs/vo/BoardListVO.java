@@ -13,6 +13,7 @@ public class BoardListVO {
 	/**
 	 * DB에서 조회한 게시글 정보의 목록
 	 */
+	// List 도 getter setter 로 구현할 수 있다.
 	private List<BoardVO> boardList;
 	
 	
