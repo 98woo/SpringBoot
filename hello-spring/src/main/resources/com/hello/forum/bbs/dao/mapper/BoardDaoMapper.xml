@@ -55,7 +55,7 @@
 		     , DEL_YN
 		  FROM BOARD
 		 WHERE DEL_YN = 'N'
-		   AND ID = #{_parameter}	<!-- 파라미터 타입이 int 이고 -->
+		   AND ID = #{_parameter}	<!-- VO가 아니면 파라미터로 쓴다. -->
 	</select>
 	
 	<update id="increaseViewCount" parameterType="_int">
@@ -64,4 +64,22 @@
 		 WHERE DEL_YN = 'N'
 		   AND ID = #{_parameter}
 	</update>
+	
+	<update id="updateOneBoard" parameterType="com.hello.forum.bbs.vo.BoardVO">
+		UPDATE BOARD 
+		   SET SUBJECT = #{subject}
+		     , EMAIL = #{email}
+		     , CONTENT = #{content}
+		     , MDFY_DT = SYSDATE 
+		 WHERE ID = #{id}
+	</update>
+	
+	
+	<update id="deleteOneBoard" parameterType="_int">
+		UPDATE BOARD 
+		   SET DEL_YN = 'Y'
+		     , MDFY_DT = SYSDATE 
+		 WHERE ID = #{_parameter}
+	</update>
+	
 </mapper>
