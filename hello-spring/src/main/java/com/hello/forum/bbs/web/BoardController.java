@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hello.forum.bbs.service.BoardService;
 import com.hello.forum.bbs.vo.BoardListVO;
@@ -120,12 +121,13 @@ public class BoardController {
 	// 파라미터로 전송된 이름과 BoardVO 의 맴버변수의 이름과 같은 것이 있다면
 	// 해당 맴버변수에 파라미터의 값을 할당해준다/!! (setter 이용)
 	@PostMapping("/board/write")
-	public String doBoardWritePage(BoardVO boardVO) {
-//		System.out.println("제목 : " + boardVO.getSubject());
-//		System.out.println("이메일 : " + boardVO.getEmail());
-//		System.out.println("내용 : " + boardVO.getContent());
+	public String doBoardWritePage(BoardVO boardVO, @RequestParam MultipartFile file) {
+		System.out.println("제목 : " + boardVO.getSubject());
+		System.out.println("이메일 : " + boardVO.getEmail());
+		System.out.println("내용 : " + boardVO.getContent());
+		System.out.println("첨부파일명: " + file.getOriginalFilename());
 		
-		boolean isCreateSuccess = this.boardService.createNewBoard(boardVO);
+		boolean isCreateSuccess = this.boardService.createNewBoard(boardVO, file);
 		if (isCreateSuccess) {
 			System.out.println("글 등록 성공");
 		}

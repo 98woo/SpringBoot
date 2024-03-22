@@ -45,7 +45,7 @@
             <textarea id="content" name="content" style="height: 300px;">${boardVO.content}</textarea>
             <div class="btn-group">
                 <div class="right-align">
-                    <input type="submit" value="저장" />
+                    <a href="/board/list"><input type="submit" value="저장" /></a>
                 </div>
             </div>
         </div>

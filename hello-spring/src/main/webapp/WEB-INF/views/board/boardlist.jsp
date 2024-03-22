@@ -44,6 +44,11 @@
         padding: 10px;
         color: #333;
     }
+    
+    table.table > tbody td[colspan] {
+    	text-align: center;
+    }
+    
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -52,6 +57,29 @@
     }
     div.grid div.rigth-align {
         text-align: right;
+    }
+    .center-align {
+    	text-align: center;
+    }
+    
+    .left-align {
+    	text-align: left;
+    }
+    .ellipsis {
+    /*
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 600px;
+        display: block;
+    */
+		overflow: hidden;
+		white-space: normal;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		word-break: keep-all;   
     }
 </style>
 </head>
@@ -62,6 +90,14 @@
             총 ${boardList.boardCnt} 건의 게시글이 검색되었습니다.
         </div>
         <table class="table">
+            <colgroup>
+                <col width="80px"/>
+                <col width="*"/>    <!--* : td들을 지정하고 남는 영역을 할당 받는다.-->
+                <col width="150px"/>
+                <col width="80px"/>
+                <col width="150px"/>
+                <col width="150px"/>
+            </colgroup>
             <thead>
                 <tr>
                     <th>번호</th>
@@ -73,27 +109,49 @@
                 </tr>
             </thead>
             <tbody>
-				<c:forEach items="${boardList.boardList}" var="board"> 
-                <tr>
-                    <td>${board.id}</td>
-                    <td>
-                        <a href="/board/view?id=${board.id}">
-                            ${board.subject}
-                        </a>
-                    </td>
-                    <td>${board.email}</td>
-                    <td>${board.viewCnt}</td>    
-                    <td>${board.crtDt}</td>    
-                    <td>${board.mdfyDt}</td>    
-                </tr>    
-				</c:forEach>
+            <!-- 브라우저에 표시 됨 HTML 주석 -->
+ 			<%-- 브라우저에 표시 표시 않음 JSP 주석 --%>
+            <!-- 
+            	boardList 의 내용이 존재한다면 (1개 이상 있다면)
+            		내용을 반복하면서 보여주고
+            	boardList의 내용이 존재하지 않는다면
+            		"등록된 게시글이 없습니다. 첫 번째 글의 주인공이 되어보세요!"를 보여준다.
+                jstl > choose when otherwise ==> java if - else if - else
+            -->
+            	<!-- 조건식의 시작을 알림. -->
+            	<c:choose>
+            	<%-- boardList 의 내용이 존재한다면 (1개 이상 있다면) --%>
+            		<c:when test="${not empty boardList.boardList }">
+            			<%--내용을 반복하면서 보여주고 --%>
+            			<c:forEach items="${boardList.boardList}" var="board"> 
+              				<tr>
+              					<td class="center-align">${board.id}</td>
+               			     	<td class="left-align">
+               			         	<a class="ellipsis" href="/board/view?id=${board.id}">${board.subject}</a>
+              			      	</td>
+			                  	<td class="center-align">${board.email}</td>
+			                  	<td class="center-align">${board.viewCnt}</td>    
+			                  	<td class="center-align">${board.crtDt}</td>    
+			                  	<td class="center-align">${board.mdfyDt}</td>    
+      			          	</tr>    
+						</c:forEach>
+            		</c:when>
+            	<%-- boardList의 내용이 존재하지 않는다면 --%>
+            	<c:otherwise>
+            			<tr>
+            				<td colspan="6">
+            					<a href="/board/write">등록된 게시글이 없습니다. 첫 번째 글의 주인공이 되어보세요!</a>
+            				</td>
+            			</tr>
+            		</c:otherwise>
+            	</c:choose>    
+				
             </tbody>
         </table>
     </div>
     <div class="right-align">
         <a href="/board/write">게시글등록</a>
     </div>
-
     게시글 수: ${boardList.boardCnt} <br/>
     조회한 게시글의 수: ${boardList.boardList.size()}
 </body>
